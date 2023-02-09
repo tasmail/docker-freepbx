@@ -8,7 +8,7 @@ ENV ASTERISK_VERSION=17.9.4 \
     G72X_CPUHOST=penryn \
     G72X_VERSION=0.1 \
     MONGODB_VERSION=4.2 \
-    PHP_VERSION=5.6 \
+    PHP_VERSION=7.4 \
     SPANDSP_VERSION=20180108 \
     RTP_START=18000 \
     RTP_FINISH=20000
@@ -303,7 +303,10 @@ RUN echo "Package: libxml2*" > /etc/apt/preferences.d/libxml2 && \
     ln -s /data/var/spool/asterisk /var/spool/asterisk && \
     rm -rf /etc/asterisk && \
     ln -s /data/etc/asterisk /etc/asterisk && \
-    ln -s /usr/sbin/crontab /usr/bin/crontab
+    ln -s /usr/sbin/crontab /usr/bin/crontab \
+    \
+### Fix crontab permissions for user asteriks
+    chmod u+s /bin/busybox
 
 ### Networking configuration
 EXPOSE 80 443 4445 4569 5060/udp 5160/udp 5061 5161 8001 8003 8008 8009 8025 ${RTP_START}-${RTP_FINISH}/udp
